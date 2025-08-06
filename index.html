@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ilha Namalsk</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* Estilos do site (mesmos que você forneceu, sem alterações desnecessárias) */
+
+    .noticias-recentes {
+      max-width: 1100px;
+      margin: 50px auto;
+      padding: 0 20px;
+    }
+
+    .titulo-secao {
+      color: #fff;
+      font-size: 26px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .lista-noticias {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+
+    .noticia-item {
+      display: flex;
+      gap: 20px;
+      background-color: rgba(18, 18, 18, 0.8);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,0,0,0.4);
+    }
+
+    .noticia-item img {
+      width: 200px;
+      height: 120px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .conteudo-noticia {
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .conteudo-noticia .categoria {
+      color: #d43c2c;
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+
+    .conteudo-noticia h3 {
+      margin: 0;
+      color: #eee;
+      font-size: 18px;
+    }
+
+    .autor-data {
+      font-size: 13px;
+      color: #bbb;
+      margin-top: 6px;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      color: #eee;
+      margin: 0;
+      padding: 0;
+      background: url('lab/fundobaixo.jpg') no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: -1;
+    }
+
+    header {
+      background-color: #0f0f0f;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #ccc;
+      font-weight: bold;
+      font-size: 18px;
+      user-select: none;
+      flex-shrink: 0;
+    }
+
+    .logo img {
+      height: 100px;
+    }
+
+    nav.nav {
+      display: flex;
+      gap: 20px;
+      font-size: 14px;
+      flex-grow: 1;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    nav.nav a {
+      color: #ccc;
+      text-decoration: none;
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.3s;
+    }
+
+    nav.nav a:hover {
+      color: #fff;
+      text-shadow: 0 0 5px #4af;
+    }
+
+    h1 {
+      color: #fff;
+      text-align: center;
+      margin: 40px 0 20px;
+      user-select: none;
+    }
+
+    .news-wrapper {
+      max-width: 1100px;
+      margin: 20px auto 40px;
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: nowrap;
+    }
+
+    .destaque-container {
+      flex: 1 1 0;
+      overflow: hidden;
+      border-radius: 6px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.6);
+      max-width: 360px;
+      min-width: 280px;
+      background: #121212cc;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .destaque-imagem {
+      position: relative;
+      background-size: cover;
+      background-position: center;
+      height: 360px;
+      display: flex;
+      align-items: flex-end;
+      border-radius: 6px 6px 0 0;
+    }
+
+    .destaque-categoria {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background-color: #444;
+      color: #fff;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 3px;
+    }
+
+    .destaque-conteudo {
+      background: rgba(0, 0, 0, 0.75);
+      padding: 20px;
+      width: 100%;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-radius: 0 0 6px 6px;
+    }
+
+    .destaque-conteudo h2 {
+      margin: 0 0 10px;
+      font-size: 18px;
+      color: #fff;
+    }
+
+    .destaque-conteudo p {
+      margin-bottom: 14px;
+      color: #ccc;
+      flex-grow: 1;
+    }
+
+    .destaque-botao {
+      display: inline-block;
+      background-color: #cc0000;
+      color: white;
+      padding: 8px 14px;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 2px;
+      transition: background-color 0.3s;
+      align-self: flex-start;
+    }
+
+    .destaque-botao:hover {
+      background-color: #990000;
+    }
+
+    .modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 400;
+      backdrop-filter: blur(6px);
+      padding: 40px;
+      overflow-y: auto;
+      outline: none;
+    }
+
+    .modal-content {
+      background: #1e1e1e;
+      padding: 40px 40px;
+      border-radius: 15px;
+      max-width: 900px;
+      width: 90%;
+      color: #eee;
+      box-shadow: 0 0 30px #000;
+      position: relative;
+      max-height: 80vh;
+      overflow-y: auto;
+      text-align: center;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 30px;
+      color: #fff;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .close-btn:hover {
+      color: #f33;
+    }
+
+    footer {
+      background-color: #0f0f0f;
+      color: #888;
+      text-align: center;
+      padding: 20px 15px;
+      font-size: 14px;
+      margin-top: auto;
+    }
+
+    footer a {
+      color: #ccc;
+      text-decoration: none;
+      margin: 0 8px;
+      transition: color 0.3s;
+    }
+
+    footer a:hover {
+      color: #fff;
+    }
+
+    .social-icons {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      font-size: 20px;
+    }
+
+    .discord-tag {
+      cursor: pointer;
+      color: #ccc;
+    }
+
+    .discord-tag:hover {
+      color: #fff;
+    }
+
+    #mapModal .modal-content {
+      max-width: 1200px;
+      width: 95%;
+      height: 80vh;
+      padding: 15px 20px 20px;
+    }
+
+    #mapModal iframe {
+      width: 100%;
+      height: calc(100% - 60px);
+      border: none;
+      border-radius: 8px;
+    }
+
+    @media(max-width: 1100px) {
+      .news-wrapper {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding: 10px;
+      }
+      .destaque-container {
+        min-width: 280px;
+        flex: 0 0 auto;
+      }
+    }
+
+    @media(max-width: 600px) {
+      .news-wrapper {
+        flex-direction: column;
+        max-width: 95%;
+        margin: 20px auto;
+      }
+      .destaque-container {
+        max-width: 100%;
+        min-width: 100%;
+        margin-bottom: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="lab/logo.png" alt="Logo" />
+      <span>DayZ Namalsk Wiki</span>
+    </div>
+    <nav class="nav">
+      <a href="#" onclick="openMapModal()">Explorar</a>
+      <a href="#" onclick="openModalById('modal2')">DayZ</a>
+      <a href="#" onclick="openModalById('modal3')">Lore do Namalsk</a>
+      <a href="#" onclick="openModalById('modal4')">Sobrevivência</a>
+      <a href="#" onclick="openModalById('modal5')">Links Úteis</a>
+    </nav>
+  </header>
+
+  <h1>Bem-vindo à Wiki e Notícias sobre Namalsk do servidor Frostbite</h1>
+
+  <!-- DESTAQUES -->
+  <div class="news-wrapper">
+    <div class="destaque-container">
+      <div class="destaque-imagem" style="background-image: url('lab/update.png');">
+        <div class="destaque-categoria">NOTÍCIA EM DESTAQUE</div>
+        <div class="destaque-conteudo">
+          <h2>Atualização DayZ 1.28</h2>
+          <p>Saudações, Sobreviventes!...</p>
+          <a href="#" class="destaque-botao" onclick="openModalById('modalDestaque1')">LEIA MAIS ➜</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="destaque-container">
+      <div class="destaque-imagem" style="background-image: url('lab/destaque.png');">
+        <div class="destaque-categoria">NOTÍCIA EM DESTAQUE</div>
+        <div class="destaque-conteudo">
+          <h2>Destaque da Comunidade - agosto de 2025</h2>
+          <p>Depois de semanas de trabalho intenso...</p>
+          <a href="#" class="destaque-botao" onclick="openModalById('modalDestaque2')">LEIA MAIS ➜</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="destaque-container">
+      <div class="destaque-imagem" style="background-image: url('lab/frostbite.png');">
+        <div class="destaque-categoria">NOTÍCIA EM DESTAQUE</div>
+        <div class="destaque-conteudo">
+          <h2>F.R.O.S.T.B.I.T.E BRASIL - Ainda em testes</h2>
+          <p>O servidor está prestes a ser lançado...</p>
+          <a href="#" class="destaque-botao" onclick="openModalById('modalDestaque3')">LEIA MAIS ➜</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTÍCIAS RECENTES -->
+  <section class="noticias-recentes">
+    <h2 class="titulo-secao">🗞️ Notícias Recentes</h2>
+    <div class="lista-noticias">
+      <article class="noticia-item">
+        <img src="lab/badlands.png" alt="Badlands" />
+        <div class="conteudo-noticia">
+          <div class="categoria">Atualização</div>
+          <h3>Expansão DayZ Badlands – Lançamento em 2026</h3>
+          <p class="autor-data">Postado por <strong>Jiri</strong> | 17 de junho de 2025</p>
+        </div>
+      </article>
+
+      <article class="noticia-item">
+        <img src="lab/update.png" alt="Atualização 1.28" />
+        <div class="conteudo-noticia">
+          <div class="categoria">Patch 1.28</div>
+          <h3>Atualização DayZ 1.28 já disponível</h3>
+          <p class="autor-data">Postado por <strong>Adam Franců</strong> | 13 de junho de 2025</p>
+        </div>
+      </article>
+
+      <article class="noticia-item">
+        <img src="lab/maio.png" alt="Maio 2025" />
+        <div class="conteudo-noticia">
+          <div class="categoria">Comunidade</div>
+          <h3>Destaque da Comunidade - Maio de 2025</h3>
+          <p class="autor-data">Postado por <strong>Hicks</strong> | 13 de maio de 2025</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- MODAIS DE DESTAQUE -->
+  <div class="modal" id="modalDestaque1">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModalById('modalDestaque1')">&times;</span>
+      <h2>📰 Atualização DayZ 1.28</h2>
+      <p>Temos o prazer de anunciar que a atualização 1.28 foi lançada em todas as plataformas...</p>
+    </div>
+  </div>
+
+  <div class="modal" id="modalDestaque2">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModalById('modalDestaque2')">&times;</span>
+      <h2>🔥 É OFICIAL: O SERVIDOR ESTÁ ABERTO!</h2>
+      <p>O Deadfall Brasil está oficialmente ABERTO para todos os jogadores!</p>
+      <a href="https://discord.gg/AGSzWzEna7" target="_blank"><i class="fab fa-discord"></i></a>
+    </div>
+  </div>
+
+  <div class="modal" id="modalDestaque3">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModalById('modalDestaque3')">&times;</span>
+      <h2>🧊 FROSTBITE BRASIL está chegando</h2>
+      <p>Servidor Full Vanilla com ideias inspiradas em servidores internacionais...</p>
+      <a href="https://discord.gg/DC3R2rG9" target="_blank"><i class="fab fa-discord"></i></a>
+    </div>
+  </div>
+
+  <!-- MODAIS DO MENU NAV -->
+  <div class="modal" id="modal2">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModalById('modal2')">&times;</span>
+      <h2>🧩 DayZ</h2>
+      <p>Informações gerais sobre o jogo DayZ, mecânicas, dicas e muito mais.</p>
+    </div>
+  </div>
+
+ <div class="modal" id="modal3">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModalById('modal3')">&times;</span>
+    <h2>🧬 LORE DO MAPA NAMALSK - A HISTÓRIA ESCONDIDA DA ILHA</h2>
+    <p>Namalsk é muito mais do que apenas um ambiente frio e hostil — é uma ilha cheia de <strong>mistérios, experimentos secretos e eventos paranormais</strong>. Originalmente criada como parte de um projeto pessoal de <strong>Adam Franců (Sumrak)</strong>, desenvolvedor da Bohemia Interactive, Namalsk tem um <strong>universo próprio</strong>, com uma narrativa profunda que se conecta com os eventos do apocalipse zumbi do DayZ.</p>
+
+    <h3>🏝️ Origem da Ilha</h3>
+    <p>Namalsk está localizada no <strong>oceano Ártico</strong>, sendo parte de um arquipélago soviético abandonado. Durante a Guerra Fria, a ilha foi usada para <strong>instalações militares e científicas secretas</strong>, muitas delas subterrâneas.</p>
+
+    <h3>🧪 Experimentos da NAC</h3>
+    <p>No coração da trama está a <strong>NAC (Namalsk Auxiliary Control)</strong> – uma organização secreta que realizou <strong>experimentos com tecnologia alienígena</strong> encontrada nas profundezas da ilha.</p>
+    <p>Esses experimentos abriram brechas dimensionais, causando <strong>anormalidades climáticas e temporais</strong>, e liberando uma <strong>forma de energia desconhecida</strong> que afetou o ecossistema local... e os seres humanos.</p>
+
+    <h3>🧊 Fenômenos Climáticos e Síndrome de Namalsk</h3>
+    <p>O frio extremo de Namalsk não é natural. Tempestades repentinas e temperaturas abaixo do normal são resultado direto dos experimentos com essa energia misteriosa.</p>
+    <p>Muitos sobreviventes que entram na ilha relatam sintomas estranhos, como <strong>visões, perda de tempo e alucinações sonoras</strong> — conhecidos como <strong>Síndrome de Namalsk</strong>.</p>
+
+    <h3>🔦 Instalações Subterrâneas</h3>
+    <p>Espalhadas pela ilha, há várias instalações como a <strong>Athena Research Site</strong> e <strong>Object A2</strong>, que escondem equipamentos de contenção, arquivos secretos e passagens para <strong>zonas de anomalias</strong>. Algumas dessas áreas exigem <strong>roupas especiais</strong> e <strong>cartões de acesso</strong> para entrar.</p>
+
+    <h3>☢️ Anomalias e Artefatos</h3>
+    <p>Namalsk também abriga <strong>zonas anômalas</strong> que distorcem a realidade, criam tempestades eletromagnéticas e liberam <strong>artefatos com propriedades misteriosas</strong>. Esses itens são extremamente valiosos... e perigosos.</p>
+
+    <h3>🧟‍♂️ Infecção e Colapso</h3>
+    <p>A presença militar na ilha colapsou após o vazamento da infecção, agravada pela energia da NAC. Agora, Namalsk está tomada por <strong>infectados, criaturas alteradas</strong> e sobreviventes hostis tentando controlar os recursos restantes.</p>
+
+    <p>Se você ouvir um <strong>alarme estranho</strong> ou ver uma <strong>luz azul pulsante</strong>... fuja. Algo está vindo.</p>
+  </div>
+</div>
+
+
+  <div class="modal" id="modal4">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModalById('modal4')">&times;</span>
+      <h2>🪓 Sobrevivência</h2>
+      <h3>Dicas de como sobreviver no frio extremo e hostil do mapa Namalsk.</h3>
+      <p>1. 🧥 Vista roupas térmicas e isoladas
+Priorize gorka jacket/pants, hunter gear, ou suits impermeáveis.
+
+Quanto mais camadas de roupa (até 4 slots por região do corpo), maior o isolamento.
+
+Sempre seque as roupas molhadas com uma fogueira ou usando uma tocha.
+
+2. 🔥 Fogueiras são sua melhor amiga
+Crie fogueiras sempre que possível com:
+
+Gravetos + lenha + trapos ou papel.
+
+Isqueiro, fósforos ou pedra + pedra para acender.
+
+Construa fogueiras em locais cobertos (casas, prédios, cavernas).
+
+Carregue uma tocha acesa ao ar livre para se manter aquecido.
+
+3. 🧂 Coma e beba com frequência
+Manter a energia e hidratação cheia aumenta a regeneração de calor.
+
+Comidas quentes (como latas aquecidas na fogueira) ajudam ainda mais.
+
+4. 🏃‍♂️ Mantenha-se ativo
+Correr e pular constantemente ajuda a manter sua temperatura corporal.
+
+Mas evite ficar com sede e fome ao mesmo tempo, pois isso te esfria.
+
+5. 🛖 Abrigue-se sempre que puder
+Evite florestas abertas e áreas de vento forte por muito tempo.
+
+Entre em casas, barracas, ou veículos abandonados para se proteger.
+
+</p>
+    </div>
+  </div>
+
+<div class="modal" id="modal5">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModalById('modal5')">&times;</span>
+    <h2>🔗 Links Úteis</h2>
+    <p><a href="https://www.izurvive.com/namalsk/" target="_blank" rel="noopener">Mapa Interativo - iZurvive</a></p>
+    <p><a href="https://dayz.com/" target="_blank" rel="noopener">Site Oficial do DayZ</a></p>
+    <p><a href="https://discord.gg/DC3R2rG9" target="_blank" rel="noopener">servidor frostbite</a></p>
+    <p><a href="https://discord.gg/AGSzWzEna7" target="_blank" rel="noopener">servidor DEADFALL BRASIL</a></p>
+  </div>
+</div>
+
+
+  <!-- MODAL DO MAPA -->
+  <div class="modal" id="mapModal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeMapModal()">&times;</span>
+      <h2>🗺️ Mapa Interativo</h2>
+      <iframe src="https://www.izurvive.com/namalsk/" title="Mapa Namalsk"></iframe>
+    </div>
+  </div>
+
+  <footer>
+    <p>Frostbite news Server © 2025 | Contato: repsky07</p>
+    <div class="social-icons">
+      <a href="https://discord.gg/DC3R2rG9" target="_blank"><i class="fab fa-discord"></i></a>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    function openModalById(id) {
+      const modal = document.getElementById(id);
+      if (modal) {
+        modal.style.display = 'flex';
+        modal.focus();
+      }
+    }
+
+    function closeModalById(id) {
+      const modal = document.getElementById(id);
+      if (modal) {
+        modal.style.display = 'none';
+      }
+    }
+
+    function openMapModal() {
+      const modal = document.getElementById('mapModal');
+      modal.style.display = 'flex';
+      modal.focus();
+    }
+
+    function closeMapModal() {
+      const modal = document.getElementById('mapModal');
+      modal.style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+      const modals = document.querySelectorAll('.modal');
+      modals.forEach(modal => {
+        if (event.target === modal) {
+          modal.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
+from earth.. :) repsky07
